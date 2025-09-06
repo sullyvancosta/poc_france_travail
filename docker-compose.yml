@@ -1,0 +1,10 @@
+services:
+    php:
+        container_name: scosta_france_travail_php
+        build:
+            context: docker/php
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/app
+            - ~/.ssh:/root/.ssh
+        tty: true
