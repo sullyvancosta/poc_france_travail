@@ -18,3 +18,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Utils\JobBoard\FranceTravailUtils:
+        $authLoginURL: '%env(FRANCE_TRAVAIL_LOGIN_URL)%'
+        $authClientId: '%env(FRANCE_TRAVAIL_CLIENT_ID)%'
+        $authClientSecret: '%env(FRANCE_TRAVAIL_CLIENT_SECRET)%'
+        $baseApiURL: '%env(FRANCE_TRAVAIL_API_URL)%'
