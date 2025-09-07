@@ -71,6 +71,7 @@ As key, the company name. Inside the object, you will find the job offer's count
 Basically, you will find for each contract type the number of job offers. 
 
 ## What can be improved ?
+- FranceTravail access id and secrets public !
 - Retrieve job offers create new token everytime we call the function `getJobOffers`, we can store it and keep it until it's invalid.
 - In DB, the enterprise's offer is stored as a string. We can think about, create a dedicated table for it. So far, we don't have the ID.
 - We also store the contract type as string. A decated table is preferable.
