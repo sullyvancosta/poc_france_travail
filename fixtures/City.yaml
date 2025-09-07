@@ -5,15 +5,32 @@ App\Entity\City:
         inseeCode: 35238
         department: 35
         franceTravailUseDepartment: false
+        useForFranceTravail: true
     City-Bordeaux:
         name: Bordeaux
         postalCode: 33000
         inseeCode: 33063
         department: 33
         franceTravailUseDepartment: false
+        useForFranceTravail: true
     City-Paris:
         name: Paris
         postalCode: 75000
         inseeCode: 75056
         department: 75
         franceTravailUseDepartment: true
+        useForFranceTravail: true
+    City-Paris-{1..9}:
+        name: 'Paris - <current()> arrondissement'
+        postalCode: '7500<current()>'
+        inseeCode: '7510<current()>'
+        department: 75
+        franceTravailUseDepartment: false
+        useForFranceTravail: false
+    City-Paris-{10..20}:
+        name: 'Paris - <current()> arrondissement'
+        postalCode: '750<current()>'
+        inseeCode: '751<current()>'
+        department: 75
+        franceTravailUseDepartment: false
+        useForFranceTravail: false

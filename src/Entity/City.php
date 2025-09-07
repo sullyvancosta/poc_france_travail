@@ -29,4 +29,7 @@ class City
 
     #[ORM\Column]
     public bool $franceTravailUseDepartment = false;
+
+    #[ORM\Column]
+    public bool $useForFranceTravail = false;
 }

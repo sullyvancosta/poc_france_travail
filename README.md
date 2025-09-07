@@ -76,4 +76,5 @@ Basically, you will find for each contract type the number of job offers.
 - We also store the contract type as string. A decated table is preferable.
 - The command ImportJobOffersFromFranceTravail performance and code can be improved.
 - Sometime, France Travail API returns Job Offer which does not match query parameters given (insee code for Bordeaux also return job offers near Bordeaux). Can be fixed.
+- Better management of Paris's arrondissements (for import job offers)
 - More tests !

@@ -62,7 +62,7 @@ class ImportJobOffersFromFranceTravail
         $this->io = new SymfonyStyle($input, $output);
         $this->io->info('Process - Import France Travail job offers - started');
 
-        $cities = $this->cityRepo->findBy([]);
+        $cities = $this->cityRepo->findBy(['useForFranceTravail' => true]);
         foreach ($cities as $city) {
             $this->io->info(sprintf('Import Job offers for city %s', (string) $city->name));
             $this->importByCity($city);
