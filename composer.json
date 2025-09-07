@@ -15,6 +15,7 @@
         "phpstan/phpdoc-parser": "^2.3",
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
+        "symfony/filesystem": "7.3.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.3.*",
         "symfony/http-client": "7.3.*",
@@ -76,6 +77,8 @@
         }
     },
     "require-dev": {
+        "hautelook/alice-bundle": "^2.15",
+        "phpunit/phpunit": "^12.3",
         "symfony/maker-bundle": "^1.64",
         "vimeo/psalm": "^6.13"
     }

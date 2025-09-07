@@ -1,0 +1,19 @@
+App\Entity\City:
+    City-Rennes:
+        name: Rennes
+        postalCode: 35000
+        inseeCode: 35238
+        department: 35
+        franceTravailUseDepartment: false
+    City-Bordeaux:
+        name: Bordeaux
+        postalCode: 33000
+        inseeCode: 33063
+        department: 33
+        franceTravailUseDepartment: false
+    City-Paris:
+        name: Paris
+        postalCode: 75000
+        inseeCode: 75056
+        department: 75
+        franceTravailUseDepartment: true

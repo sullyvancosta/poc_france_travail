@@ -33,4 +33,7 @@ class JobOfferDTO
 
     #[Valid]
     public JobOfferLieuTravail $lieuTravail;
+
+    #[Valid]
+    public JobOfferEntreprise $entreprise;
 }

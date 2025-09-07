@@ -9,6 +9,7 @@ use App\DTO\JobBoard\FranceTravail\JobOffers\GetJobOffersDTO;
 use App\Exception\JobBoard\FranceTravail\FranceTravailGetJobOffersInvalidParametersException;
 use App\Exception\JobBoard\FranceTravail\FranceTravailLoginException;
 use JsonException;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -47,15 +48,17 @@ class FranceTravailUtils
      */
     public function getJobOffers(
         array $inseeCodes = [],
-        array $departments = []
-    ): GetJobOffersDTO
-    {
+        array $departments = [],
+        ?string $range = null
+    ): GetJobOffersDTO {
         if (count($inseeCodes) > 0 && count($departments) > 0) {
             throw new FranceTravailGetJobOffersInvalidParametersException();
         }
 
         $authToken = $this->loginToApi();
-        $getJobOffersQuery = [];
+        $getJobOffersQuery = [
+            'range' => $range,
+        ];
         if (count($inseeCodes) > 0) {
             $getJobOffersQuery['commune'] = implode(',', $inseeCodes);
         } else if (count($departments) > 0) {
@@ -91,26 +94,30 @@ class FranceTravailUtils
      */
     protected function loginToApi(): string
     {
-        $loginResponse = $this->httpClient->request(
-            Request::METHOD_POST,
-            $this->authLoginURL,
-            [
-                'body' => [
-                    'grant_type'    => 'client_credentials',
-                    'client_id'     => $this->authClientId,
-                    'client_secret' => $this->authClientSecret,
-                    'scope'         => 'api_offresdemploiv2 o2dsoffre',
-                ],
-            ]
-        );
+        try {
+            $loginResponse = $this->httpClient->request(
+                Request::METHOD_POST,
+                $this->authLoginURL,
+                [
+                    'body' => [
+                        'grant_type'    => 'client_credentials',
+                        'client_id'     => $this->authClientId,
+                        'client_secret' => $this->authClientSecret,
+                        'scope'         => 'api_offresdemploiv2 o2dsoffre',
+                    ],
+                ]
+            );
 
-        $loginResponseData = $loginResponse->toArray();
-        $loginResponseDataJson = json_encode($loginResponseData, JSON_THROW_ON_ERROR);
+            $loginResponseData = $loginResponse->toArray();
+            $loginResponseDataJson = json_encode($loginResponseData, JSON_THROW_ON_ERROR);
 
-        $loginResponseDTO = $this->serializer->deserialize($loginResponseDataJson, LoginResponseDTO::class, 'json');
-        $loginViolations = $this->validator->validate($loginResponseDTO);
+            $loginResponseDTO = $this->serializer->deserialize($loginResponseDataJson, LoginResponseDTO::class, 'json');
+            $loginViolations = $this->validator->validate($loginResponseDTO);
 
-        if (0 !== $loginViolations->count()) {
+            if (null === $loginResponseDTO  || 0 !== $loginViolations->count()) {
+                throw new FranceTravailLoginException();
+            }
+        } catch (ClientException) {
             throw new FranceTravailLoginException();
         }
 
